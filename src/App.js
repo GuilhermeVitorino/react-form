@@ -9,10 +9,14 @@ class App extends Component {
     return (
       <Container component="article" maxWidth="sm" align="center">
         <Typography variant="h3" component="h1">Form</Typography>
-        <Form></Form>
+        <Form onSubmitForm={onSubmitForm}></Form>
       </Container>
     );
   }
+}
+
+function onSubmitForm(data){
+  console.log(data);
 }
 
 export default App;
