@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { Button, TextField, Switch, FormControlLabel } from '@material-ui/core';
 import FormValidations from '../../contexts/FormValidations';
+import userErrors from '../../hooks/useErrors';
 
 function PesonalData({ onSubmitForm }) {
 
@@ -9,25 +10,8 @@ function PesonalData({ onSubmitForm }) {
   const [cpf, setCpf] = useState("");
   const [sales, setSales] = useState(true);
   const [news, setNews] = useState(true);
-  const [errors, setErrors] = useState({ cpf: { valid: true, text: "" } });
-
   const validations = useContext(FormValidations);
-
-  function validateFields(e){
-    const { name, value } = e.target;
-    const newState = {...errors}
-    newState[name] = validations[name](value);
-    setErrors(newState);
-  }
-
-  function cansubmit() {
-    for(let field in errors) {
-      if(!errors[field].valid) 
-        return false;
-    }
-
-    return true;
-  }
+  const [errors, validateFields, cansubmit] = userErrors(validations);
   
   return (
 

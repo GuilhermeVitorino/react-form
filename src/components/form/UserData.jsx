@@ -1,30 +1,14 @@
 import { Button, TextField } from '@material-ui/core';
 import React, { useState, useContext } from 'react';
 import FormValidations from '../../contexts/FormValidations';
+import userErrors from '../../hooks/useErrors';
 
 function Userdata({ onSubmitForm }) {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errors, setErrors] = useState({ password: { valid: true, text: "" } });
-
   const validations = useContext(FormValidations);
-
-  function validateFields(e) {
-    const { name, value } = e.target;
-    const newState = { ...errors }
-    newState[name] = validations[name](value);
-    setErrors(newState);
-  }
-
-  function cansubmit() {
-    for(let field in errors) {
-      if(!errors[field].valid) 
-        return false;
-    }
-
-    return true;
-  }
+  const [errors, validateFields, cansubmit] = userErrors(validations);
 
   return (
     <form
