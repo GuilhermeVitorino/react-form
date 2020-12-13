@@ -4,7 +4,7 @@ import AddressData from './AddressData';
 import PesonalData from './PersonalData';
 import Userdata from './UserData';
 
-function Form({ onSubmitForm, validateCPF }) {
+function Form({ onSubmitForm }) {
 
   const [currentStep, setCurrentStep] = useState(0);
   const [collectedData, setData] = useState(0);
@@ -17,7 +17,7 @@ function Form({ onSubmitForm, validateCPF }) {
 
   const forms = [
     <Userdata onSubmitForm={collectData} />,
-    <PesonalData onSubmitForm={collectData} validateCPF={validateCPF} />,
+    <PesonalData onSubmitForm={collectData} />,
     <AddressData onSubmitForm={collectData} />,
     <Typography variant="h5"> Thanks for register!</Typography>
   ];

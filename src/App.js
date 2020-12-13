@@ -3,13 +3,19 @@ import './App.css';
 import Form from './components/form/Form';
 import { Container, Typography } from '@material-ui/core'
 import 'fontsource-roboto'
-
+import { validateCPF, validatePassword } from './models/register'
+import ValidationsForm from './contexts/FormValidations'
+ 
 class App extends Component {
   render() {
     return (
       <Container component="article" maxWidth="sm">
         <Typography variant="h3" component="h1" align="center">Form</Typography>
-        <Form onSubmitForm={onSubmitForm} validateCPF={validateCPF} ></Form>
+        <ValidationsForm.Provider
+          value={{cpf:validateCPF, password:validatePassword}}
+        >
+          <Form onSubmitForm={onSubmitForm} ></Form>
+        </ValidationsForm.Provider>
       </Container>
     );
   }
@@ -17,14 +23,6 @@ class App extends Component {
 
 function onSubmitForm(data){
   console.log(data);
-}
-
-function validateCPF(cpf){
-  if (cpf.length != 11) {
-    return {valid: false, text: 'CPF mus be have 11 digits!'}
-  } else {
-    return {valid: true}
-  }
 }
 
 export default App;

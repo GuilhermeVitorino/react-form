@@ -25,6 +25,7 @@ function AddressData({ onSubmitForm }) {
         }}
 
         id="cep"
+        name="cep"
         label="ZIP Code"
         type="number"
         variant="outlined"
@@ -38,6 +39,7 @@ function AddressData({ onSubmitForm }) {
         }}
 
         id="address"
+        name="address"
         label="Address"
         type="text"
         variant="outlined"
@@ -52,6 +54,7 @@ function AddressData({ onSubmitForm }) {
         }}
 
         id="number"
+        name="number"
         label="Number"
         type="number"
         variant="outlined"
@@ -65,6 +68,7 @@ function AddressData({ onSubmitForm }) {
         }}
 
         id="state"
+        name="state"
         label="State"
         type="text"
         variant="outlined"
@@ -78,6 +82,7 @@ function AddressData({ onSubmitForm }) {
         }}
 
         id="city"
+        name="city"
         label="City"
         type="text"
         variant="outlined"

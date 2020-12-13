@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Button, TextField, Switch, FormControlLabel } from '@material-ui/core';
+import FormValidations from '../../contexts/FormValidations';
 
-function PesonalData({ onSubmitForm, validateCPF }) {
+function PesonalData({ onSubmitForm }) {
 
   const [name, setName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -10,12 +11,31 @@ function PesonalData({ onSubmitForm, validateCPF }) {
   const [news, setNews] = useState(true);
   const [errors, setErrors] = useState({ cpf: { valid: true, text: "" } });
 
+  const validations = useContext(FormValidations);
+
+  function validateFields(e){
+    const { name, value } = e.target;
+    const newState = {...errors}
+    newState[name] = validations[name](value);
+    setErrors(newState);
+  }
+
+  function cansubmit() {
+    for(let field in errors) {
+      if(!errors[field].valid) 
+        return false;
+    }
+
+    return true;
+  }
+  
   return (
 
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        onSubmitForm({name, lastName, cpf, sales, news});
+        if(cansubmit())
+          onSubmitForm({name, lastName, cpf, sales, news});
       }}
     >
 
@@ -27,6 +47,7 @@ function PesonalData({ onSubmitForm, validateCPF }) {
         }}
 
         id="name"
+        name="name"
         label="Name"
         variant="outlined"
         margin="normal"
@@ -41,6 +62,7 @@ function PesonalData({ onSubmitForm, validateCPF }) {
         }}
 
         id="lastName"
+        name="lastName"
         label="Last Name"
         variant="outlined"
         margin="normal"
@@ -54,15 +76,12 @@ function PesonalData({ onSubmitForm, validateCPF }) {
           setCpf(e.target.value);
         }}
 
-        onBlur={(e) => {
-          const isValid = validateCPF(cpf);
-          setErrors({ cpf: isValid });
-        }}
-
+        onBlur={validateFields}
         type="number"
         error={!errors.cpf.valid}
         helperText={errors.cpf.text}
         id="cpf"
+        name="cpf"
         label="CPF"
         variant="outlined"
         margin="normal"
